@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    用户中心
+    用户中心，测试
   </div>
 </template>
 
