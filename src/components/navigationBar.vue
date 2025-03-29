@@ -10,9 +10,9 @@
           <img src="@/assets/data.jpg" alt="" />
           <span>首页</span>
         </div>
-        <div class="studet">
+        <div class="studet" @click="$router.push('/stuBook')">
           <img src="@/assets/data.jpg" alt="" />
-          <span>学生图鉴</span>
+          <span >学生图鉴</span>
         </div>
         <div
           class="video"
