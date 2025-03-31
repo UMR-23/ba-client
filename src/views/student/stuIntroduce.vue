@@ -15,6 +15,8 @@
               class="stu-img"
               src="@/assets/student/stuIntroduce/376623.png"
             />
+
+            <!-- 左边底部，三个盒子部分 -->
             <div class="left-bottom">
               <div class="rank">
                 <div class="rank-top">
@@ -42,6 +44,7 @@
                 </div>
               </div>
 
+              <!-- 表情盒子 -->
               <div class="base-data">
                 <div class="base-data-left">
                   <div class="bdl-left">
@@ -91,7 +94,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="base-data-right">
+                <div class="base-data-right" @click="hobbyPopup()">
                   <img
                     src="@/assets/student/stuIntroduce/left/mes.png"
                     alt=""
@@ -115,7 +118,7 @@
               <div class="number-value">
                 <div class="search">
                   <div class="sear-left">基本信息</div>
-                  <div class="sear-right">
+                  <div class="sear-right" @click="mesgPopup()">
                     <img
                       src="@/assets/student/stuIntroduce/search.png"
                       alt=""
@@ -152,22 +155,29 @@
                 </div>
               </div>
 
-              <!-- 技能介绍 -->
               <div class="skill">
                 <div class="sk-left">
-                  <div class="skl-skill1">
-                    <div class="skill-name">EX技能</div>
+                  <div
+                    class="skl-skill"
+                    v-for="skill in skills"
+                    :key="skill.id"
+                    @click="skillPopup(skill)"
+                  >
+                    <div class="skill-name">
+                      {{ getSkillTypeName(skill.specialName) }}
+                    </div>
                     <img src="@/assets/student/stuIntroduce/skill/ex.png" />
                     <hr />
                     <div class="max">max</div>
                   </div>
-                  <div class="skl-skill2">
+
+                  <!-- <div class="skl-skill">
                     <div class="skill-name">普通技能</div>
                     <img src="@/assets/student/stuIntroduce/skill/common.png" />
                     <hr />
                     <div class="max">max</div>
                   </div>
-                  <div class="skl-skill3">
+                  <div class="skl-skill">
                     <div class="skill-name">被动技能</div>
                     <img
                       src="@/assets/student/stuIntroduce/skill/passivity.png"
@@ -175,14 +185,14 @@
                     <hr />
                     <div class="max">max</div>
                   </div>
-                  <div class="skl-skill4">
+                  <div class="skl-skill">
                     <div class="skill-name">辅助技能</div>
                     <img
                       src="@/assets/student/stuIntroduce/skill/passivity.png"
                     />
                     <hr />
                     <div class="max">max</div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="sk-right">技能升级</div>
               </div>
@@ -236,14 +246,322 @@
         </div>
       </div>
     </div>
+    <!-- 搜索弹框 -->
+    <div
+      v-if="isMesgPopup"
+      class="mesg-popup-container"
+      @click="closePopupIfOutside"
+    >
+      <div class="mesg-box">
+        <div class="mesg-content">
+          <div class="head">
+            数值详细
+            <div class="close" @click="mesgPopup()">X</div>
+          </div>
+          <div class="body">
+            <div class="body-contain">
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">生命值</div>
+                  <div class="num-value">23837</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">治愈力</div>
+                  <div class="num-value">5694</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">攻击力</div>
+                  <div class="num-value">5134</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">防御力</div>
+                  <div class="num-value">109</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">命中值</div>
+                  <div class="num-value">905</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">闪避值</div>
+                  <div class="num-value">201</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">暴击值</div>
+                  <div class="num-value">201</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">暴击伤害率</div>
+                  <div class="num-value">200%</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">暴击值</div>
+                  <div class="num-value">201</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">暴击伤害率</div>
+                  <div class="num-value">200%</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">安定值</div>
+                  <div class="num-value">1988</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">射程</div>
+                  <div class="num-value">750%</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">CC强化力</div>
+                  <div class="num-value">100</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">CC抵抗力</div>
+                  <div class="num-value">100</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">载弹量</div>
+                  <div class="num-value">5 (1)</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">防御贯穿</div>
+                  <div class="num-value">0</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row-left">
+                  <div class="line"></div>
+                  <div class="num-value-name">受治愈率</div>
+                  <div class="num-value">100%</div>
+                </div>
+                <div class="row-right">
+                  <div class="line"></div>
+                  <div class="num-value-name">COST回复</div>
+                  <div class="num-value">700%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 学生个人信息查询弹框 -->
+    <div
+      v-if="isHobyPopup"
+      class="hobby-popup-contain"
+      @click="closePopupIfOutside"
+    >
+      <div class="hobby-box">
+        <div class="hobby-content">
+          <div class="head">
+            学生信息
+            <div class="close" @click="hobbyPopup()">X</div>
+          </div>
+
+          <div class="body">
+            <div class="body-left">
+              <div class="top">
+                <img src="@/assets/student/stuIntroduce/avatar.png" />
+                <div class="top-right">
+                  <!-- 学校区域这里想不出来名字了，先暂定布局 -->
+                  <div class="school-and-club-img-area">
+                    <div class="school-img">
+                      <img
+                        src="@/assets/student/stuIntroduce/school/school1.png"
+                        alt=""
+                      />
+                    </div>
+                    <div class="school-and-club">
+                      <div class="school-area">
+                        <div class="school-area-name">格黑娜学园</div>
+                        <div class="school-area-rank">2年纪</div>
+                      </div>
+                      <div class="club-area">
+                        <div class="club">社团</div>
+                        <div>便利屋68</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tr-name">爱露</div>
+                </div>
+              </div>
+
+              <div class="bottom">
+                <div class="base-information">基本情报</div>
+                <div class="text">
+                  格黑娜学园所属，自称便利屋68社长。
+                  作为格黑娜学园的社团活动，阿露喜欢以便利屋68为据点，从事一些不法行当。
+                  阿露虽然十分向往成为一位帅气的黑帮分子，但因为经常做事错漏百出，所以总是很快就暴露无遗。
+                </div>
+              </div>
+            </div>
+
+            <div class="body-right">
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">年龄</div>
+                  <div class="row-value">16岁</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">生日</div>
+                  <div class="row-value">3月12日</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">身高</div>
+                  <div class="row-value">160 cm</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">爱好</div>
+                  <div class="row-value">学习经营</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">角色设计</div>
+                  <div class="row-value">DoReMi</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">角色原画</div>
+                  <div class="row-value">DoReMi</div>
+                </div>
+                <hr />
+              </div>
+
+              <div class="row-value-hr">
+                <div class="row">
+                  <div class="row-name">cv.</div>
+                  <div class="row-value">近藤玲奈</div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 技能组件 -->
+    <SkillPopup
+      :skillData="selectSkill"
+      :visible="isSkillPopup"
+      @close="skillPopup"
+    ></SkillPopup>
   </div>
 </template>
 
 <script>
+import { getStuInfor } from "@/api/student";
+import SkillPopup from "@/components/skillPopup.vue";
 export default {
   name: "stuIntroduce",
   data() {
-    return {};
+    return {
+      isMesgPopup: false,
+      isHobyPopup: false,
+      isSkillPopup: false,
+      selectSkill: null,
+      // 0代表是ex,1普通技能，2是被动技能，3是辅助技能
+      skills: [],
+    };
+  },
+  components: {
+    SkillPopup,
+  },
+  created() {
+    this.getStuInfor();
+  },
+  methods: {
+    mesgPopup() {
+      this.isMesgPopup = !this.isMesgPopup;
+    },
+    hobbyPopup() {
+      this.isHobyPopup = !this.isHobyPopup;
+    },
+    skillPopup(skill) {
+      this.isSkillPopup = !this.isSkillPopup;
+      // 把选中的skill数据赋值给变量里面存着，然后给组件
+      this.selectSkill = skill;
+    },
+    closePopupIfOutside(event) {
+      // 检查点击的目标是否是弹框容器本身
+      if (event.target === event.currentTarget) {
+        this.isMesgPopup = false; // 关闭弹框
+        this.isHobyPopup = false; // 关闭弹框
+      }
+    },
+    async getStuInfor() {
+      const res = await getStuInfor(1);
+      this.skills = res.data.skills
+    },
+    // 判断技能名字
+    getSkillTypeName(specialName) {
+      switch (specialName) {
+        case 0:
+          return "EX技能";
+        case 1:
+          return "普通技能";
+        case 2:
+          return "被动技能";
+        case 3:
+          return "辅助技能";
+        default:
+          return "未知技能";
+      }
+    },
   },
 };
 </script>
@@ -597,6 +915,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .base-data .base-data-right img {
@@ -628,7 +947,7 @@ export default {
 .right-top .right-top-box {
   width: 33%;
   height: 100%;
-  background-color: rgb( 86,107,134,0.3);
+  background-color: rgb(86, 107, 134, 0.3);
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -639,9 +958,9 @@ export default {
   cursor: pointer;
 }
 
-#right-top-box{
-   background-color: rgba(215,234,242);
-   color: rgb( 55, 57, 60);
+#right-top-box {
+  background-color: rgba(215, 234, 242);
+  color: rgb(55, 57, 60);
 }
 
 /* 右边区域，下面的信息内容 */
@@ -687,6 +1006,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   color: rgb(80, 111, 142);
+  cursor: pointer;
 }
 
 .number-value .search img {
@@ -802,10 +1122,10 @@ export default {
   border-radius: 3px;
 }
 
-.skl-skill1,
-.skl-skill2,
-.skl-skill3,
-.skl-skill4 {
+.skl-skill,
+.skl-skill,
+.skl-skill,
+.skl-skill {
   width: 22%;
   height: 92%;
   margin: 0 1%;
@@ -818,28 +1138,28 @@ export default {
   box-shadow: 0 3px 10px rgb(180, 179, 179);
   cursor: pointer;
 }
-.skl-skill1 hr,
-.skl-skill2 hr,
-.skl-skill3 hr,
-.skl-skill4 hr {
+.skl-skill hr,
+.skl-skill hr,
+.skl-skill hr,
+.skl-skill hr {
   border: 0;
   height: 2px;
   background-color: rgb(206, 215, 223);
   width: 80%;
 }
 
-.skl-skill1 .skill-name,
-.skl-skill2 .skill-name,
-.skl-skill3 .skill-name,
-.skl-skill4 .skill-name {
+.skl-skill .skill-name,
+.skl-skill .skill-name,
+.skl-skill .skill-name,
+.skl-skill .skill-name {
   color: rgb(92, 116, 161);
   font-weight: 800;
 }
 
-.skl-skill1 .max,
-.skl-skill2 .max,
-.skl-skill3 .max,
-.skl-skill4 .max {
+.skl-skill .max,
+.skl-skill .max,
+.skl-skill .max,
+.skl-skill .max {
   color: #060406;
   font-weight: 1000;
 }
@@ -930,7 +1250,7 @@ export default {
   color: rgb(92, 116, 161);
   font-weight: 800;
   border-radius: 4px;
-   box-shadow: 0 5px 10px rgb(149, 145, 145);
+  box-shadow: 0 5px 10px rgb(149, 145, 145);
 }
 
 /* 装备和爱用品 */
@@ -1001,6 +1321,379 @@ export default {
   font-weight: 800;
   color: rgb(92, 116, 161);
   transform: skewX(-15deg);
-   box-shadow: 0 3px 4px rgb(134, 134, 134);
+  box-shadow: 0 3px 4px rgb(134, 134, 134);
+}
+
+/* 详细数值信息弹框 */
+.mesg-popup-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(68, 69, 69, 0.55);
+
+  /* 固定在浏览器上面,这里可以让弹框在最上层 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mesg-box {
+  width: 60%;
+  height: 70%;
+  background-color: rgb(240, 240, 239);
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgb(53, 53, 53);
+  overflow: hidden;
+}
+
+.mesg-content {
+  width: 100%;
+  height: 100%;
+}
+
+/* 弹框头部样式 */
+.mesg-content .head {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(175, 221, 241),
+    rgb(151, 196, 209)
+  );
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(45, 70, 99);
+  font-weight: 800;
+  font-size: 2vw;
+}
+.mesg-content .head .close {
+  color: rgb(16, 33, 64);
+  font-weight: 800;
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  font-size: 2vw;
+}
+
+/* 弹框内容区域 */
+.mesg-content .body {
+  width: 100%;
+  height: 88%;
+  margin-top: 1%;
+  background-color: rgb(240, 240, 239);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mesg-content .body .body-contain {
+  width: 94%;
+  height: 90%;
+  background-color: rgb(226, 226, 225);
+  overflow-y: auto; /* 允许垂直滚动 */
+  scrollbar-width: none; /* 隐藏滚动条（Firefox） */
+}
+
+.body-contain::-webkit-scrollbar {
+  display: none;
+}
+.body-contain .row {
+  width: 96%;
+  height: 20%;
+  background-color: rgb(255, 255, 255);
+  margin: 2% auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+}
+
+/* 数值弹框,里面每行样式进行排版 */
+.body-contain .row .row-left,
+.body-contain .row .row-right {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.row-left .line,
+.row-right .line {
+  width: 1%;
+  height: 25%;
+  background-color: rgb(115, 214, 253);
+  margin-left: 2%;
+}
+.row-left .num-value-name,
+.row-right .num-value-name {
+  font-weight: 800;
+  font-size: 1.2vw;
+  margin: 0 1%;
+  color: rgb(49, 74, 102);
+}
+
+.row-left .num-value,
+.row-right .num-value {
+  font-weight: 600;
+  font-size: 1vw;
+  color: rgb(63, 65, 68);
+}
+
+/* 下面是学生爱好弹框展示 */
+.hobby-popup-contain {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(82, 83, 84, 0.6);
+}
+
+.hobby-box {
+  width: 60%;
+  height: 70%;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgb(53, 53, 53);
+  overflow: hidden;
+}
+
+.hobby-box .hobby-content {
+  width: 100%;
+  height: 100%;
+}
+
+/* 头部设置 */
+.hobby-content .head {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(175, 221, 241),
+    rgb(151, 196, 209)
+  );
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(45, 70, 99);
+  font-weight: 800;
+  font-size: 2vw;
+}
+.hobby-content .head .close {
+  color: rgb(16, 33, 64);
+  font-weight: 800;
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  font-size: 2vw;
+}
+
+/* 学生爱好，学校介绍内容布局设置样式 */
+.hobby-content .body {
+  height: 88%;
+  width: 100%;
+
+  margin-top: 0.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.body .body-left {
+  width: 60%;
+  height: 100%;
+}
+
+/* 学生爱好区域，身体部分，左边区域 */
+.body-left .top {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* 身体部分，左区域，上面的头部照片和学校区域 */
+.body-left .top img {
+  width: 22%;
+  height: 84%;
+}
+
+.body-left .top .top-right {
+  width: 76%;
+  height: 84%;
+}
+
+.top-right .school-and-club-img-area {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.school-and-club-img-area .school-img {
+  width: 18%;
+  height: 94%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgb(116, 115, 115);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.school-and-club-img-area .school-img img {
+  width: 80%;
+  height: 90%;
+}
+.school-and-club-img-area .school-and-club {
+  width: 80%;
+  height: 100%;
+}
+.school-and-club .school-area {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 4%;
+}
+
+.school-area .school-area-name {
+  font-weight: 800;
+  color: rgb(97, 111, 129);
+  margin: 0 1%;
+
+  background-color: rgb(253, 250, 158);
+  border-radius: 5px;
+}
+
+.school-area .school-area-rank {
+  font-weight: 800;
+  color: rgb(97, 111, 129);
+  background-color: rgb(245, 232, 74);
+  border-radius: 5px;
+}
+
+.school-and-club .club-area {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.club-area .club {
+  font-weight: 900;
+  color: rgb(97, 111, 129);
+}
+
+.club-area div {
+  font-weight: 700;
+  color: rgb(75, 77, 79);
+  margin-left: 1%;
+}
+
+.top-right .tr-name {
+  width: 30%;
+  height: 40%;
+  background-color: rgb(220, 220, 220, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgb(138, 136, 136);
+  font-weight: 800;
+  font-size: 2vw;
+}
+
+/* 身体部分，左区域，下面的内容介绍区域 */
+.body-left .bottom {
+  width: 100%;
+  height: 56%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.body-left .bottom .base-information {
+  width: 98%;
+  height: 10%;
+  background-color: rgb(45, 76, 114);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: skewX(-10deg);
+  border-radius: 2px;
+  color: #ebf2f1;
+  font-weight: 500;
+  font-size: 1.1vw;
+}
+
+.body-left .bottom .text {
+  width: 100%;
+  height: 88%;
+  margin-top: 2%;
+  color: rgb(74, 75, 78);
+  font-weight: 800;
+  font-size: 1.2vw;
+}
+
+/* 学生爱好弹框，右边信息区域 */
+.body .body-right {
+  width: 36%;
+  height: 92%;
+  background-color: rgb(253, 253, 253);
+  box-shadow: 0 5px 10px rgb(116, 109, 109);
+  border-radius: 10px;
+  margin-left: 2%;
+}
+
+.body-right .row-value-hr {
+  width: 90%;
+  height: 12%;
+  margin: 1% auto;
+}
+
+.row-value-hr .row {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto;
+}
+.body-right .row .row-name {
+  width: 40%;
+  color: rgb(46, 70, 99);
+  font-weight: 800;
+  font-size: 1.3vw;
+  text-transform: uppercase;
+}
+
+.body-right .row .row-value {
+  width: 60%;
+  color: rgb(55, 57, 60);
+  font-weight: 800;
+  font-size: 1.2vw;
+  margin-left: 4%;
+}
+
+.body-right hr {
+  border: 0;
+  height: 2px;
+  background-color: rgb(206, 215, 223);
+  margin: 0 auto;
+  width: 80%;
 }
 </style>
