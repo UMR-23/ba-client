@@ -4,6 +4,7 @@ import home from '@/views/home/index.vue'
 import login from '@/views/login/index.vue'
 import user from '@/views/user/index.vue'
 import stuBook from '@/views/student/stuBook.vue'
+import stuIntroduce from '@/views/student/stuIntroduce.vue'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,7 @@ const router = new VueRouter({
     {path:'/login',component:login},
     {path:'/user',component:user},
     {path:'/stuBook',component:stuBook},
+    {path:'/stuIntroduce',component:stuIntroduce},
   ]
 })
 
